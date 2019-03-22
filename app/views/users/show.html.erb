@@ -1,0 +1,19 @@
+<h3>My Bookmarks</h3>
+
+  <% @user_bookmarks.each do |bookmark| %>
+      <div class="row">
+        <div class="col-sm-8">
+          <%= bookmark.url %>
+          <%= link_to "Delete", bookmark, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this bookmark?' }  %>
+        <% end %>
+  </div>
+</div>
+    <h3>My Liked Bookmarks</h3>
+      <% @liked_bookmarks.each do |like| %>
+      <div class="row">
+        <div class="col-md-8">
+      <%= render partial: 'bookmarks/url', locals: { bookmark: like.bookmark } %>
+      <%= render partial: 'likes/like', locals: { bookmark: like.bookmark } %>
+      <% end %>
+   </div>
+</div>
