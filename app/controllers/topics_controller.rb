@@ -18,9 +18,10 @@ class TopicsController < ApplicationController
       @topic = Topic.find(params[:id])
     end
 
+
     def create
-      @topic = Topic.new
-      @topic.title = params[:topic][:title]
+      @topic = Topic.new(topic_params)
+      @topic.user = current_user
       if @topic.save
 
         flash[:notice] = "topic was saved."
@@ -34,6 +35,7 @@ class TopicsController < ApplicationController
 
     def update
       @topic = Topic.find(params[:id])
+      @topic.assign_attributes(topic_params)
       if @topic.save
          flash[:notice] = "topic was updated."
          redirect_to @topic
@@ -54,4 +56,9 @@ class TopicsController < ApplicationController
          render :show
        end
      end
+
+     private
+     def topic_params
+     params.require(:topic).permit(:title, :user)
+   end
 end
